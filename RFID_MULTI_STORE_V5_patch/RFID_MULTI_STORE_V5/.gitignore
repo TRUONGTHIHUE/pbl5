@@ -1,0 +1,9 @@
+device_config.json
+pc/device_config.json
+**/node_modules/
+*.log
+sdkconfig
+sdkconfig.old
+build/
+__pycache__/
+*.pyc

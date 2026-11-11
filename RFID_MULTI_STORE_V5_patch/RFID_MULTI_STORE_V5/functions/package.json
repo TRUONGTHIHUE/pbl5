@@ -1,0 +1,12 @@
+{
+  "name": "rfid-multi-store-device-api",
+  "version": "1.0.0",
+  "private": true,
+  "engines": { "node": "22" },
+  "main": "index.js",
+  "scripts": { "test": "node --test tests/*.test.js" },
+  "dependencies": {
+    "firebase-admin": "^13.0.0",
+    "firebase-functions": "^6.0.0"
+  }
+}

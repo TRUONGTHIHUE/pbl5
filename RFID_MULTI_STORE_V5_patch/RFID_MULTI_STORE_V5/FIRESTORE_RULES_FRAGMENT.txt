@@ -1,0 +1,19 @@
+// MERGE into your EXISTING firestore.rules file, inside:
+// match /databases/{database}/documents { ... }
+// DO NOT replace all website rules with this fragment.
+// Keep stores/{storeId} readable only by its authenticated owner.
+match /stores/{storeId}/authorizedDevices/{deviceId} {
+  function isOwner() {
+    return request.auth != null &&
+      get(/databases/$(database)/documents/stores/$(storeId)).data.ownerUid == request.auth.uid &&
+      deviceId.matches('^[A-Za-z0-9_-]{3,64}$');
+  }
+  allow get, list: if isOwner();
+  allow create, update: if isOwner() &&
+    request.resource.data.keys().hasOnly(['enabled']) &&
+    request.resource.data.enabled is bool;
+  allow delete: if isOwner();
+}
+// devices/{deviceId} contains token hashes; only trusted backend/admin may manage.
+// Make sure NO broad/overlapping allow rule grants clients read/write access to devices.
+// Optional explicit rule: match /devices/{deviceId} { allow read, write: if false; }

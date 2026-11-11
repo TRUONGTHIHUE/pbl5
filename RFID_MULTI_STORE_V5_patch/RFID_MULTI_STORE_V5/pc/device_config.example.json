@@ -1,0 +1,5 @@
+{
+  "endpoint": "https://asia-southeast1-MA_PROJECT.cloudfunctions.net/deviceApi",
+  "device_id": "may-quet-01",
+  "device_token": "TAO_BANG_provision_device.py_KHONG_NHAP_TAY"
+}
