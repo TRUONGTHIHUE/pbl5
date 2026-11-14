@@ -1,0 +1,17 @@
+menu "PBL5 unified - hardware only (no Wi-Fi or Firebase secrets)"
+    config PBL5_RC522_SCK
+        int "RC522 SCK GPIO"
+        default 18
+    config PBL5_RC522_MOSI
+        int "RC522 MOSI GPIO"
+        default 23
+    config PBL5_RC522_MISO
+        int "RC522 MISO GPIO"
+        default 19
+    config PBL5_RC522_CS
+        int "RC522 SDA/SS GPIO"
+        default 21
+    config PBL5_RC522_RST
+        int "RC522 RST GPIO"
+        default 22
+endmenu

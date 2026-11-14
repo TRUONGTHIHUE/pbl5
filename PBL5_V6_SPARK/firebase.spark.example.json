@@ -1,0 +1,14 @@
+{
+  "firestore": {
+    "rules": "firestore.spark.rules.example"
+  },
+  "emulators": {
+    "firestore": {
+      "port": 18085
+    },
+    "ui": {
+      "enabled": false
+    },
+    "singleProjectMode": true
+  }
+}

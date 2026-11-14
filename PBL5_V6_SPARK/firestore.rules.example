@@ -1,0 +1,33 @@
+// REVIEW/MERGE ONLY. Not included in firebase.json; never auto-deployed.
+// These rules assume the owner-only website model in the request.
+// Existing broad allow rules elsewhere can still grant access: review all rules.
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function ownsStore(storeId) {
+      return signedIn() && get(/databases/$(database)/documents/stores/$(storeId)).data.ownerUid == request.auth.uid;
+    }
+    function canonicalRfid(data) {
+      return data.rfidId is string && data.rfidId.matches('^([0-9A-F]{8}|[0-9A-F]{14}|[0-9A-F]{20})$');
+    }
+    match /devices/{deviceId} { allow read, write: if false; }
+    match /stores/{storeId} {
+      allow read: if signedIn() && resource.data.ownerUid == request.auth.uid;
+      allow create: if signedIn() && request.resource.data.ownerUid == request.auth.uid && canonicalRfid(request.resource.data);
+      allow update: if signedIn() && resource.data.ownerUid == request.auth.uid &&
+        request.resource.data.ownerUid == resource.data.ownerUid && canonicalRfid(request.resource.data);
+      allow delete: if signedIn() && resource.data.ownerUid == request.auth.uid;
+      match /authorizedDevices/{deviceId} {
+        allow read, delete: if ownsStore(storeId);
+        allow create, update: if ownsStore(storeId) &&
+          request.resource.data.keys().hasOnly(['enabled']) && request.resource.data.enabled is bool;
+      }
+      match /products/{productId} {
+        allow read, delete: if ownsStore(storeId);
+        allow create, update: if ownsStore(storeId) &&
+          request.resource.data.barcode is string && request.resource.data.barcode.size() > 0;
+      }
+    }
+  }
+}
