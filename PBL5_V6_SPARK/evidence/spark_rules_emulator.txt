@@ -1,24 +1,20 @@
 i  emulators: Starting emulators: firestore
 i  emulators: Detected demo project ID "demo-pbl5-spark", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
-i  firestore: downloading cloud-firestore-emulator-v1.22.0.jar...
-
 i  firestore: Firestore Emulator logging to firestore-debug.log
 ✔  firestore: Firestore Emulator was started in standard edition.
 ✔  firestore: Firestore Emulator UI websocket is running on 9150.
-i  Running script: node rules.test.cjs
-[2026-11-14T09:05:00.946Z]  @firebase/firestore: Firestore (13.3.0): GrpcConnection RPC 'Write' stream 0x13c5076d error. Code: 7 Message: 7 PERMISSION_DENIED: 
-false for 'create' @ L18, false for 'update' @ L18
-[2026-11-14T09:05:00.955Z]  @firebase/firestore: Firestore (13.3.0): GrpcConnection RPC 'Write' stream 0x13c5076e error. Code: 7 Message: 7 PERMISSION_DENIED: 
-false for 'create' @ L25, false for 'update' @ L25
-[2026-11-14T09:05:00.981Z]  @firebase/firestore: Firestore (13.3.0): GrpcConnection RPC 'Write' stream 0x13c5076f error. Code: 7 Message: 7 PERMISSION_DENIED: 
+i  Running script: node /workspace/work/rulescheck/rules.test.cjs
+[2026-11-14T13:11:00.349Z]  @firebase/firestore: Firestore (13.3.0): GrpcConnection RPC 'Write' stream 0x68414a6e error. Code: 7 Message: 7 PERMISSION_DENIED: 
+false for 'create' @ L16, false for 'update' @ L16
+[2026-11-14T13:11:00.364Z]  @firebase/firestore: Firestore (13.3.0): GrpcConnection RPC 'Write' stream 0x68414a6f error. Code: 7 Message: 7 PERMISSION_DENIED: 
+false for 'create' @ L23, false for 'update' @ L23
+[2026-11-14T13:11:00.381Z]  @firebase/firestore: Firestore (13.3.0): GrpcConnection RPC 'Write' stream 0x68414a70 error. Code: 7 Message: 7 PERMISSION_DENIED: 
+evaluation error at L51:25 for 'create' @ L51, evaluation error at L51:25 for 'update' @ L51, false for 'create' @ L51
+[2026-11-14T13:11:00.485Z]  @firebase/firestore: Firestore (13.3.0): GrpcConnection RPC 'Write' stream 0x68414a72 error. Code: 7 Message: 7 PERMISSION_DENIED: 
+evaluation error at L40:24 for 'update' @ L40, false for 'update' @ L40
+[2026-11-14T13:11:00.510Z]  @firebase/firestore: Firestore (13.3.0): GrpcConnection RPC 'Write' stream 0x68414a73 error. Code: 7 Message: 7 PERMISSION_DENIED: 
 evaluation error at L45:34 for 'create' @ L45, evaluation error at L45:34 for 'update' @ L45, false for 'create' @ L45
-[2026-11-14T09:05:01.036Z]  @firebase/firestore: Firestore (13.3.0): GrpcConnection RPC 'Write' stream 0x13c50771 error. Code: 7 Message: 7 PERMISSION_DENIED: 
-false for 'create' @ L45, false for 'update' @ L45
-[2026-11-14T09:05:01.051Z]  @firebase/firestore: Firestore (13.3.0): GrpcConnection RPC 'Write' stream 0x13c50772 error. Code: 7 Message: 7 PERMISSION_DENIED: 
-evaluation error at L33:24 for 'update' @ L33, false for 'update' @ L33
-[2026-11-14T09:05:01.067Z]  @firebase/firestore: Firestore (13.3.0): GrpcConnection RPC 'Write' stream 0x13c50773 error. Code: 7 Message: 7 PERMISSION_DENIED: 
-evaluation error at L40:34 for 'create' @ L40, evaluation error at L40:34 for 'update' @ L40, false for 'create' @ L40
-PASS 24 Firestore Emulator checks; no live project accessed.
+PASS 31 Firestore Emulator checks; no live project accessed.
 ✔  Script exited successfully (code 0)
 i  emulators: Shutting down emulators.
 i  firestore: Stopping Firestore Emulator

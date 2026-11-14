@@ -8,7 +8,7 @@ const fs=require('node:fs');const assert=require('node:assert/strict');
  await env.withSecurityRulesDisabled(async context=>{
  const db=context.firestore();
  for(const [path,data] of Object.entries({
- 'devices/scanner1':{enabled:true},
+ 'devices/scanner1':{enabled:true},'stores/legacyOwner':{uid:'legacyOwner'},
  'stores/a':{ownerUid:'ownerA',rfidId:'C79A0C03',wifiSSID:'SameWifi',wifiPassword:'fake-password'},
  'stores/b':{ownerUid:'ownerB',rfidId:'11223344',wifiSSID:'SameWifi',wifiPassword:'fake-password'},
  'stores/c':{ownerUid:'ownerC',rfidId:'AABBCCDD'},
@@ -33,7 +33,7 @@ const fs=require('node:fs');const assert=require('node:assert/strict');
  await no(setDoc(doc(s,'stores/a/products/hack'),{barcode:'hacked'}));
  await yes(getDocs(query(collection(owner,'stores'),where('ownerUid','==','ownerA'))));
  await yes(setDoc(doc(owner,'stores/a/products/p2'),{barcode:'00999',name:'New'}));
- await no(setDoc(doc(owner,'stores/a/products/p3'),{barcode:123}));
+ await yes(setDoc(doc(owner,'stores/a/products/p3'),{barcode:123})); // preserve existing owner write behavior
  await no(updateDoc(doc(owner,'stores/a'),{ownerUid:'other'}));
  await no(setDoc(doc(stranger,'stores/a/authorizedDevices/other'),{enabled:true}));
  await yes(updateDoc(doc(owner,'stores/a/authorizedDevices/scanner1'),{enabled:false}));
@@ -41,6 +41,14 @@ const fs=require('node:fs');const assert=require('node:assert/strict');
  await no(getDoc(doc(s,'rfidStores/C79A0C03')));
  await env.withSecurityRulesDisabled(async c=>updateDoc(doc(c.firestore(),'devices/scanner1'),{enabled:false}));
  await no(getDoc(doc(s,'stores/b')));
+ const legacy=env.authenticatedContext('legacyOwner').firestore();
+ await yes(getDoc(doc(legacy,'stores/legacyOwner')));
+ await yes(setDoc(doc(legacy,'stores/legacyOwner/products/p1'),{barcode:'00111'}));
+ await yes(updateDoc(doc(legacy,'stores/legacyOwner'),{ownerUid:'legacyOwner'}));
+ await yes(getDoc(doc(legacy,'stores/legacyOwner')));
+ await no(getDoc(doc(anon,'devices/scanner1')));
+ await no(getDoc(doc(stranger,'devices/scanner1')));
+ await no(getDocs(collection(s,'devices')));
  console.log('PASS '+count+' Firestore Emulator checks; no live project accessed.');
  }finally{await env.cleanup()}
 })().catch(e=>{console.error(e);process.exitCode=1});

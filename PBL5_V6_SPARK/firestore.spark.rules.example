@@ -1,50 +1,54 @@
-// REFERENCE ONLY. Review against current website rules before Publish.
-// Not auto-deployed. Never add a broad public allow alongside these rules.
+// Based on the owner's existing website rules; adds scoped scanner reads.
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    function signedIn() { return request.auth != null; }
-    function owner(id) {
-      return signedIn() && get(/databases/$(database)/documents/stores/$(id)).data.ownerUid == request.auth.uid;
+    function signedIn() {
+      return request.auth != null;
     }
-    function scanner(id) {
+    function scannerCanRead(storeId) {
       return signedIn()
-        && get(/databases/$(database)/documents/devices/$(request.auth.uid)).data.enabled == true
-        && get(/databases/$(database)/documents/stores/$(id)/authorizedDevices/$(request.auth.uid)).data.enabled == true
-        && get(/databases/$(database)/documents/stores/$(id)).data.get('enabled', true) == true;
+        && get(/databases/$(database)/documents/devices/$(request.auth.uid)).data.get('enabled', false) == true
+        && get(/databases/$(database)/documents/stores/$(storeId)/authorizedDevices/$(request.auth.uid)).data.get('enabled', false) == true
+        && get(/databases/$(database)/documents/stores/$(storeId)).data.get('enabled', true) == true;
     }
-    match /devices/{uid} {
-      allow get: if signedIn() && request.auth.uid == uid;
-      allow list, write: if false; // trusted admin creates through Console
+    match /devices/{deviceUid} {
+      allow get: if signedIn() && request.auth.uid == deviceUid;
+      allow list, write: if false;
     }
-    match /rfidStores/{rfid} {
-      allow get: if rfid.matches('^([0-9A-F]{8}|[0-9A-F]{14}|[0-9A-F]{20})$')
+    match /rfidStores/{rfidUid} {
+      allow get: if rfidUid.matches('^([0-9A-F]{8}|[0-9A-F]{14}|[0-9A-F]{20})$')
         && resource.data.storeId is string
-        && scanner(resource.data.storeId)
-        && get(/databases/$(database)/documents/stores/$(resource.data.storeId)).data.rfidId == rfid;
-      allow list, write: if false; // unique mapping ID, admin manages through Console
+        && scannerCanRead(resource.data.storeId)
+        && get(/databases/$(database)/documents/stores/$(resource.data.storeId)).data.rfidId == rfidUid;
+      allow list, write: if false;
     }
-    match /stores/{id} {
-      allow get: if owner(id) || scanner(id);
+    match /stores/{storeId} {
+      function owns(data) {
+        return signedIn() && (
+          data.get('ownerUid', '') == request.auth.uid ||
+          (data.get('ownerUid', '') == '' && storeId == request.auth.uid && data.get('uid', '') == request.auth.uid)
+        );
+      }
+      function ownsThisStore() {
+        return owns(get(/databases/$(database)/documents/stores/$(storeId)).data);
+      }
+      allow get: if signedIn() && (
+        storeId == request.auth.uid || owns(resource.data) || scannerCanRead(storeId)
+      );
       allow list: if signedIn() && resource.data.ownerUid == request.auth.uid;
-      allow create: if signedIn() && request.resource.data.ownerUid == request.auth.uid
-        && request.resource.data.rfidId is string
-        && request.resource.data.rfidId.matches('^([0-9A-F]{8}|[0-9A-F]{14}|[0-9A-F]{20})$');
-      allow update: if owner(id) && request.resource.data.ownerUid == resource.data.ownerUid
-        && request.resource.data.rfidId is string
-        && request.resource.data.rfidId.matches('^([0-9A-F]{8}|[0-9A-F]{14}|[0-9A-F]{20})$');
-      allow delete: if owner(id);
-      match /authorizedDevices/{uid} {
-        allow get: if owner(id) || (signedIn() && request.auth.uid == uid);
-        allow list, delete: if owner(id);
-        allow create, update: if owner(id) && request.resource.data.keys().hasOnly(['enabled'])
+      allow create: if signedIn() && request.resource.data.ownerUid == request.auth.uid;
+      allow update: if owns(resource.data) && request.resource.data.ownerUid == request.auth.uid;
+      allow delete: if owns(resource.data);
+      match /authorizedDevices/{deviceUid} {
+        allow get: if ownsThisStore() || (signedIn() && request.auth.uid == deviceUid);
+        allow list, delete: if ownsThisStore();
+        allow create, update: if ownsThisStore()
+          && request.resource.data.keys().hasOnly(['enabled'])
           && request.resource.data.enabled is bool;
       }
-      match /products/{product} {
-        allow read: if owner(id) || scanner(id);
-        allow create, update: if owner(id) && request.resource.data.barcode is string
-          && request.resource.data.barcode.size() > 0;
-        allow delete: if owner(id);
+      match /products/{productId} {
+        allow read: if ownsThisStore() || scannerCanRead(storeId);
+        allow write: if ownsThisStore();
       }
     }
   }

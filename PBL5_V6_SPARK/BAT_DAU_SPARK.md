@@ -152,4 +152,7 @@ npm install
 npm test
 ```
 
-Kết quả lần sửa này: 24 kiểm tra Firestore Emulator đạt. Mẫu Rules được kiểm thử với schema trong fixture, KHÔNG phải Rules đang deploy của website thật. Những dòng PERMISSION_DENIED trong log là các ca cố tình thử truy cập trái quyền. File firebase.json mặc định rỗng để tránh deploy nhầm. Config Functions cũ đã chuyển sang firebase.functions.legacy.json.
+Kết quả lần sửa này: 31 kiểm tra Firestore Emulator đạt. Mẫu Rules được kiểm thử với schema trong fixture, KHÔNG phải Rules đang deploy của website thật. Những dòng PERMISSION_DENIED trong log là các ca cố tình thử truy cập trái quyền. File firebase.json mặc định rỗng để tránh deploy nhầm. Config Functions cũ đã chuyển sang firebase.functions.legacy.json.
+
+### Rules cập nhật sau khi nhận Rules website thật
+File firestore.spark.rules.example đã được hợp nhất với Rules người dùng gửi: giữ nhánh owns(ownerUid)/legacy uid và quyền products cũ; thêm devices, rfidStores, authorizedDevices và scanner read. Đã kiểm thử 31 ca Emulator. Sao lưu Rules đang dùng rồi thay bằng nội dung file này trong Console và Publish. Không có deploy tự động.
