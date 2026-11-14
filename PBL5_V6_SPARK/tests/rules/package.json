@@ -1,0 +1,12 @@
+{
+  "name": "pbl5-spark-rules-tests",
+  "private": true,
+  "scripts": {
+    "test": "firebase emulators:exec --config ../../firebase.spark.example.json --only firestore --project demo-pbl5-spark \"node rules.test.cjs\""
+  },
+  "devDependencies": {
+    "@firebase/rules-unit-testing": "^6.0.0",
+    "firebase": "^13.3.0",
+    "firebase-tools": "^15.36.0"
+  }
+}

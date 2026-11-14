@@ -1,0 +1,17 @@
+{
+  "name": "pbl5-device-backend",
+  "version": "6.0.0",
+  "private": true,
+  "main": "index.js",
+  "engines": {
+    "node": "22"
+  },
+  "scripts": {
+    "test": "node --test tests/api.test.js tests/repository.test.js",
+    "audit:data": "node tools/audit_data.js"
+  },
+  "dependencies": {
+    "firebase-admin": "^13.0.0",
+    "firebase-functions": "^6.0.0"
+  }
+}

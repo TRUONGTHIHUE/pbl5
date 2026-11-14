@@ -1,0 +1,3 @@
+dependencies:
+  idf: "==5.5.5"
+  abobija/rc522: "4.0.1"

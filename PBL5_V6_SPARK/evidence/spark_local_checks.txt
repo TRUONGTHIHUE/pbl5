@@ -1,0 +1,90 @@
+test_fake_model_and_decoder_keep_leading_zero (test_camera_provision.CameraLogicTests.test_fake_model_and_decoder_keep_leading_zero) ... ok
+test_generate_once_and_hash_without_owner_password (test_camera_provision.ProvisionTests.test_generate_once_and_hash_without_owner_password) ... ok
+test_backend_errors_clear_store_and_send_cancel (test_controller.ControllerTests.test_backend_errors_clear_store_and_send_cancel) ... ok
+test_board_reset_same_generation_not_same_session (test_controller.ControllerTests.test_board_reset_same_generation_not_same_session) ... ok
+test_card_change_during_resolve_discards_old_credentials (test_controller.ControllerTests.test_card_change_during_resolve_discards_old_credentials) ... ok
+test_fast_disconnect_reconnect_link_sequence_invalidates_product (test_controller.ControllerTests.test_fast_disconnect_reconnect_link_sequence_invalidates_product) ... ok
+test_full_store_wifi_product_flow (test_controller.ControllerTests.test_full_store_wifi_product_flow) ... ok
+test_heartbeat_gap_recovers_by_requesting_new_generation (test_controller.ControllerTests.test_heartbeat_gap_recovers_by_requesting_new_generation) ... ok
+test_ip_alone_and_wrong_ssid_not_ready (test_controller.ControllerTests.test_ip_alone_and_wrong_ssid_not_ready) ... ok
+test_missing_duplicate_and_numeric_barcode (test_controller.ControllerTests.test_missing_duplicate_and_numeric_barcode) ... ok
+test_no_duplicate_backend_job_for_repeated_status (test_controller.ControllerTests.test_no_duplicate_backend_job_for_repeated_status) ... ok
+test_old_product_cannot_override_new_store (test_controller.ControllerTests.test_old_product_cannot_override_new_store) ... ok
+test_product_timeout_rejects_late_result (test_controller.ControllerTests.test_product_timeout_rejects_late_result) ... ok
+test_reopening_python_requires_fresh_backend_authorization (test_controller.ControllerTests.test_reopening_python_requires_fresh_backend_authorization) ... ok
+test_resolve_timeout_rejects_late_result (test_controller.ControllerTests.test_resolve_timeout_rejects_late_result) ... ok
+test_revoked_permission_blocks_further_scans (test_controller.ControllerTests.test_revoked_permission_blocks_further_scans) ... ok
+test_same_ssid_does_not_identify_store (test_controller.ControllerTests.test_same_ssid_does_not_identify_store) ... ok
+test_serial_loss_discards_all_pending_work (test_controller.ControllerTests.test_serial_loss_discards_all_pending_work) ... ok
+test_snapshot_without_seen_scan_requests_fresh_resolve (test_controller.ControllerTests.test_snapshot_without_seen_scan_requests_fresh_resolve) ... ok
+test_stale_camera_frame_after_new_card_is_ignored (test_controller.ControllerTests.test_stale_camera_frame_after_new_card_is_ignored) ... ok
+test_wifi_loss_and_reconnect_invalidate_inflight_product (test_controller.ControllerTests.test_wifi_loss_and_reconnect_invalidate_inflight_product) ... ok
+test_wrong_password_status_blocks_products (test_controller.ControllerTests.test_wrong_password_status_blocks_products) ... ok
+test_wrong_store_product_response_is_rejected (test_controller.ControllerTests.test_wrong_store_product_response_is_rejected) ... ok
+test_config_validation_and_secret_repr (test_controller.ProtocolTests.test_config_validation_and_secret_repr) ... ok
+test_encode_boundary_and_string_barcode (test_controller.ProtocolTests.test_encode_boundary_and_string_barcode) ... ok
+test_protocol_and_normalization (test_controller.ProtocolTests.test_protocol_and_normalization) ... ok
+test_ean13_keeps_leading_zero_with_real_zbar (test_decoder_synthetic.SyntheticDecoderTest.test_ean13_keeps_leading_zero_with_real_zbar) ... skipped 'Optional ReportLab/Pillow/ZBar runtime unavailable'
+test_missing_card_and_product (test_http_integration.HttpIntegration.test_missing_card_and_product) ... ok
+test_ping_and_normalized_rfid (test_http_integration.HttpIntegration.test_ping_and_normalized_rfid) ... ok
+test_project_mismatch_is_rejected (test_http_integration.HttpIntegration.test_project_mismatch_is_rejected) ... ok
+test_two_stores_same_wifi_and_same_barcode (test_http_integration.HttpIntegration.test_two_stores_same_wifi_and_same_barcode) ... ok
+test_wrong_device_token_rejected (test_http_integration.HttpIntegration.test_wrong_device_token_rejected) ... ok
+test_bad_config_does_not_register_account (test_scanner_registration.RegistrationTests.test_bad_config_does_not_register_account) ... ok
+test_signup_writes_config_once_and_does_not_grant_permissions (test_scanner_registration.RegistrationTests.test_signup_writes_config_once_and_does_not_grant_permissions) ... ok
+test_account_mismatch (test_spark_backend.SparkTests.test_account_mismatch) ... ok
+test_bad_uid_numeric_barcode_and_path (test_spark_backend.SparkTests.test_bad_uid_numeric_barcode_and_path) ... ok
+test_expired_token_reauthenticates (test_spark_backend.SparkTests.test_expired_token_reauthenticates) ... ok
+test_flow_same_wifi_two_stores_same_barcode (test_spark_backend.SparkTests.test_flow_same_wifi_two_stores_same_barcode) ... ok
+test_mapping_must_match_store (test_spark_backend.SparkTests.test_mapping_must_match_store) ... ok
+test_missing_duplicate (test_spark_backend.SparkTests.test_missing_duplicate) ... ok
+test_missing_mapping_does_not_guess_store (test_spark_backend.SparkTests.test_missing_mapping_does_not_guess_store) ... ok
+test_revoked_permission_and_device (test_spark_backend.SparkTests.test_revoked_permission_and_device) ... ok
+test_typed_values_and_config_redacts_secret (test_spark_backend.SparkTests.test_typed_values_and_config_redacts_secret) ... ok
+
+----------------------------------------------------------------------
+Ran 43 tests in 0.329s
+
+OK (skipped=1)
+✔ auth and API version are required (1.938883ms)
+✔ disabled device is rejected (0.167502ms)
+✔ valid RFID accepts separators and returns owner identity (1.190865ms)
+✔ malformed and non-existing RFID (0.266993ms)
+✔ RFID duplicate across owners is rejected (0.272531ms)
+✔ RFID alone is insufficient: unauthorized scanner never receives Wi-Fi (0.203847ms)
+✔ two stores sharing Wi-Fi preserve different store/owner IDs (0.96211ms)
+✔ two stores with same string barcode return their own product (0.356086ms)
+✔ numeric barcode is rejected, never silently converted (0.447214ms)
+✔ missing barcode only searches selected store (0.365892ms)
+✔ duplicate barcode in ONE store returns duplicate, not arbitrary product (0.261794ms)
+✔ revoked store permission also blocks products (0.205139ms)
+✔ invalid Wi-Fi and missing owner are explicit configuration errors (0.227683ms)
+✔ invalid paths, request method and size are rejected (0.149676ms)
+✔ backend exceptions produce bounded redacted errors (0.270297ms)
+✔ RFID supports 4/7/10 bytes, not a single hardcoded card (0.091017ms)
+✔ Wi-Fi validation includes byte limits/open/hex PSK (0.076005ms)
+✔ migration catches canonical collisions before any writes (0.401154ms)
+✔ migration plans spaced UID normalization and flags numeric barcode (0.163947ms)
+✔ noncanonical stored RFID is not silently full-scanned; audit required (0.247713ms)
+✔ Firestore adapter scopes products to selected store and preserves barcode type (1.319519ms)
+✔ Firestore adapter checks device and per-store grant documents (0.251018ms)
+✔ Firestore adapter exact canonical RFID query limits to two to detect duplicates (0.296126ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 128.888162
+PASS: 14 native C policy assertions. NOT an ESP-IDF build or RF Wi-Fi test.
+PASS same Wi-Fi: new store, no stop/start
+PASS changed/wrong password: reconfigure, timeout, no old store fallback
+PASS network loss/reconnect: readiness gated, selected store preserved
+PASS late credentials from previous RFID rejected
+PASS different boot nonce rejected
+PASS Python reopen: fresh generation and backend authorization required
+PASS backend cancel clears selected store
+PASS delayed STOP event recovers driver state
+HOST TEST DOUBLE ONLY: no actual ESP-IDF build, Wi-Fi AP, USB, or RC522 used.
+These checks do NOT run an ESP-IDF build, real Firebase, physical USB/Wi-Fi or camera/model inference.

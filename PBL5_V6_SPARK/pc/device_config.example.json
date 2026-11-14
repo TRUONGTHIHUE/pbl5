@@ -1,0 +1,8 @@
+{
+  "endpoint": "https://REPLACE_WITH_PRINTED_FUNCTION_URL/deviceApiV6",
+  "device_id": "may-quet-01",
+  "device_token": "REPLACE_BY_RUNNING_PROVISION_DEVICE_DO_NOT_USE_THIS",
+  "project_id": "quanlycuahang-afb59",
+  "timeout_seconds": 15,
+  "allow_localhost": false
+}
